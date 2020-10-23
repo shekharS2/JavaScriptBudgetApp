@@ -18,11 +18,11 @@ class UI {
 
   submitBudgetForm(){
     const value = this.budgetInput.value;
-    if(value==='' || value < 0){
+    if(value==="" || value < 0){
       this.budgetFeedback.classList.add('showItem');
-      this.budgetFeedback.innerHTML = '<p>value cannot be empty or negative</p>';
-      const self = this; ///???????????????????
-      console.log(this);
+      this.budgetFeedback.innerHTML = `<p>value cannot be empty or negative</p>`;
+      const self = this; 
+      //console.log(this);
 
       setTimeout(function(){
         this.budgetFeedback.classList.remove('showItem');
@@ -44,7 +44,7 @@ class UI {
     } else if(total > 0){
       this.balance.classList.remove('showRed','showBlack');
       this.balance.classList.remove('showGreen');
-    } else{
+    } else if(total === 0){
       this.balance.classList.remove('showRed','showGreen');
       this.balance.classList.remove('showBlack');
     }
@@ -54,10 +54,10 @@ class UI {
     const expenseValue = this.expenseInput.value;
     const amountValue = this.amountInput.value;
 
-    if(expenseValue === '' || amountValue === '' || amountValue < 0){
+    if(expenseValue === "" || amountValue === "" || amountValue < 0){
       this.expenseFeedback.classList.add("showItem");
-      this.expenseFeedback.innerHTML = "<p>values cannot be empty or negative</p>";
-      const self = this; ///////???????????????
+      this.expenseFeedback.innerHTML = `<p>values cannot be empty or negative</p>`;
+      const self = this; 
       setTimeout(function(){
         self.expenseFeedback.classList.remove("showItem");
       }, 4000);
@@ -70,8 +70,8 @@ class UI {
         id: this.itemID,
         title: expenseValue,
         amount: amount,
+      };
 
-      }
       this.itemID++;
       this.itemList.push(expense);
       this.addExpense(expense);
@@ -110,7 +110,7 @@ class UI {
         return acc;
       }, 0);
     }
-
+    this.expenseAmount.textContent = total;
     return total;
   }
 
@@ -124,7 +124,7 @@ class UI {
     //remove from dom
     let expense = this.itemList.filter(function(item){
       return item.id === id;
-    })
+    });
 
     //show value
     this.expenseInput.value = expense[0].title;
@@ -134,7 +134,7 @@ class UI {
     //remove from list
     let templist = this.itemList.filter(function(item){
       return item.id !== id;
-    })
+    });
 
     this.itemList = templist;
     this.showBalance();
@@ -150,7 +150,7 @@ class UI {
     //remove from list
     let templist = this.itemList.filter(function(item){
       return item.id !== id;
-    })
+    });
 
     this.itemList = templist;
     this.showBalance();
@@ -161,32 +161,32 @@ function eventListeners(){
   const budgetForm = document.getElementById("budget-form");
   const expenseForm = document.getElementById("expense-form");
   const expenseList = document.getElementById("expense-list");
-}
 
 //new instance of UI class
-const ui = new UI()
+  const ui = new UI();
 
-budgetForm.addEventListener("submit", function(event){
-  event.preventDefault();
-  ui.submitBudgetForm();
-})
+  budgetForm.addEventListener("submit", function(event){
+    event.preventDefault();
+    ui.submitBudgetForm();
+  });
 
-expenseForm.addEventListener("submit", function(event){
-  event.preventDefault();
-  ui.submitBudgetForm();
-})
+  expenseForm.addEventListener("submit", function(event){
+    event.preventDefault();
+    ui.submitExpenseForm();
+  });
 
-expenseList.addEventListener("click", function(event){
-  if(event.target.parentElement.classList.contains('edit-icon')){
-    ui.editExpense(event.target.parentElement)
-  } else if(event.target.parentElement.classList.contains('delete-icon')){
-    ui.deleteExpense(event.target.parentElement)
-  }
-});
+  expenseList.addEventListener("click", function(event){
+    if(event.target.parentElement.classList.contains('edit-icon')){
+      ui.editExpense(event.target.parentElement);
+    } else if(event.target.parentElement.classList.contains('delete-icon')){
+      ui.deleteExpense(event.target.parentElement);
+    }
+  });
+}
 
 document.addEventListener('DOMContentLoaded', function(){
   eventListeners();
-})
+});
 
 
 
