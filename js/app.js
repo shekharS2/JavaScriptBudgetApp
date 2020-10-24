@@ -25,7 +25,7 @@ class UI {
       //console.log(this);
 
       setTimeout(function(){
-        this.budgetFeedback.classList.remove('showItem');
+        self.budgetFeedback.classList.remove('showItem');
       }, 4000);
     } else{
       this.budgetAmount.textContent = value;
@@ -55,11 +55,11 @@ class UI {
     const amountValue = this.amountInput.value;
 
     if(expenseValue === "" || amountValue === "" || amountValue < 0){
-      this.expenseFeedback.classList.add("showItem");
+      this.expenseFeedback.classList.add('showItem');
       this.expenseFeedback.innerHTML = `<p>values cannot be empty or negative</p>`;
       const self = this; 
       setTimeout(function(){
-        self.expenseFeedback.classList.remove("showItem");
+        self.expenseFeedback.classList.remove('showItem');
       }, 4000);
     } else{
       let amount = parseInt(amountValue);
